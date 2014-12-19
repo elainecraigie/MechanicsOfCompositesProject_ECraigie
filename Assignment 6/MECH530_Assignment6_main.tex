@@ -1,0 +1,235 @@
+\documentclass{SelimArticle}
+\definecolor{RosyBrown}{rgb}{0.737255,0.560784,0.560784}
+\definecolor{light goldenrod}{rgb}{0.933333,0.866667,0.509804}
+\definecolor{LightGoldenrod}{rgb}{0.933333,0.866667,0.509804}
+\definecolor{Sienna}{rgb}{0.627451,0.321569,0.176471}
+\definecolor{Red}{rgb}{0.803922,0.000000,0.000000} %Actually red3
+
+\sectionfont{ \sectionrule{0pt}{0pt}{-5pt}{0.8pt} }  %Horizontal line below section.
+\setcounter{secnumdepth}{2}  % Numbering of sections and subsections
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[refpage]{nomencl}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{pdfpages}
+\usepackage{setspace} %allows double spacing with \doublespacing command
+\usepackage{pdflscape}
+\usepackage[graphicx]{realboxes}
+\setlength{\nomitemsep}{-\parsep}
+\usepackage[linktoc=all]{hyperref} %allows me to make a hyperref table of contents
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%Used for nomenclature making
+\renewcommand*{\pagedeclaration}[1]{\unskip\dotfill\hyperpage{#1}}
+\makenomenclature
+%In CMD, makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\newcommand*{\plogo}{\fbox{$\mathcal{PL}$}} % Generic publisher logo
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\newcommand*{\titleAT}{\begingroup % Create the command for including the title page in the document
+\newlength{\drop} % Command for generating a specific amount of whitespace
+\drop=0.1\textheight % Define the command as 10% of the total text height
+
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+
+\vspace{\drop} % Whitespace between the top lines and title
+\centering % Center all text
+\textcolor{Red}{ % Red font color
+{\Huge TERM PROJECT}\\[0.5\baselineskip] % Title line 1
+{\Large MECH-530}\\[0.75\baselineskip] % Title line 2
+{\Huge Progress Report 6}} % Title line 3
+
+\vspace{0.25\drop} % Whitespace between the title and short horizontal line
+\rule{0.3\textwidth}{0.4pt}\par % Short horizontal line under the title
+\vspace{\drop} % Whitespace between the thin horizontal line and the author name
+
+{\Large \textsc{Elaine Craigie} \\ \vspace{0.5cm} (260476434)}\par % Author name
+
+\vfill % Whitespace between the author name and publisher text
+%{\large \textcolor{Red}{\plogo}}\\[0.5\baselineskip] % Publisher logo
+\includegraphics[scale = 0.45]{pic_mcgill}
+\vspace{2.0cm}
+{\Large \\ \today}\par % Publisher
+\vspace{1.0cm}
+{\raggedleft{}
+\textcolor{Red}{
+{\large \\ \textsc{Overview:} This progress report features the optimization of three design problems using the code that has been developed.}}}
+\centering
+\rule{\textwidth}{0.4pt}\par % Thin horizontal line
+\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
+\rule{\textwidth}{1pt}\par % Thick horizontal line
+
+\endgroup}
+
+%----------------------------------------------------------------------------------------
+%	BLANK DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\pagestyle{empty} % Removes page numbers
+
+\titleAT % This command includes the title page
+%%%%%%%%%%%%%%%%%%%%
+
+\printnomenclature[0.5in]
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section{Design 1: Design of a Filament Wound Pressure Vessel}
+Based on the following given parameters, the applied load vectors were obtained. Thus, $N_{1} = 0.025~\text{MN/m}$ and $N_{2} = 0.05~\text{MN/m}$ (tensile loads) while $N_{6} = 0$~N/m, and $M_{1} = M_{2} = M_{6} = 0$~N.
+\begin{itemize}
+\item p = 1.25 MPa (pressure inside the cylinder)
+\item D = 8.0 cm (width/diameter of the cylinder)
+\end{itemize}
+\begin{align*}
+N_{1} &= \bar{\sigma_{1}} \cdot h \\
+&= \frac{p \cdot D}{4} \\
+&= \frac{1.25 \cdot 10^{6} \cdot 0.08}{4} \\
+&= 0.025 \cdot 10^{6}~\text{N/m}
+\end{align*}
+\begin{align*} 
+N_{2} &= \bar{\sigma_{2}} \cdot h \\
+&= \frac{p \cdot D}{2} \\
+&= \frac{1.25 \cdot 10^{6} \cdot 0.08}{2} \\
+&= 0.050 \cdot 10^{6}~\text{N/m}
+\end{align*}
+Thus the optimal ply angle for the layup $[\pm\theta]_{s}$ is for $\theta = 52^{o}$. This was determined from Figure~\ref{fig:q1graph}~since this value maximizes the Hashin R.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{q1_graph}
+        \caption{Optimization of R Values for Various $\theta$}
+        \label{fig:q1graph}
+\end{figure}
+Refer to Tables~\ref{tab:q1stress}~and~\ref{tab:q1r}~in Appendix~\ref{sec:q1} for the program output as well as the stresses, strains and safety factor $R$ values per top and bottom of each ply.
+
+\section{Design 2: Design of a Laminate}
+Generally $D_{11} = D_{22}$ for a balanced angle ply with $\theta = 45^{o}$.
+
+In this case, no load is applied and the layup given in Table~\ref{tab:q2},~(also written [55/-25/-55/25]$_{s}$), produces a constant of proportionality $D_{11}/D_{22} = K = 0.9375$ which satisfies the given design requirements. Thus a total of 8 layers are used and the laminate is symmetric. Please refer to the output in Appendix~\ref{sec:q2} for further details.
+\begin{table}[H]
+\centering
+\caption{Layup for Design 2}
+\label{tab:q2}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Ply & Qty             & Material           & Angle & Thickness \\
+& & & ($^{o}$) & (mm) \\
+\hline
+        8 &          1 & E-glass/Epoxy &         55 &      0.125 \\
+
+        7 &          1 & E-glass/Epoxy &        -25 &      0.125 \\
+
+        6 &          1 & E-glass/Epoxy &        -55 &      0.125 \\
+
+        4-5 &          2 & E-glass/Epoxy &         25 &      0.250 \\
+
+        3 &          1 & E-glass/Epoxy &        -55 &      0.125 \\
+
+        2 &          1 & E-glass/Epoxy &        -25 &      0.125 \\
+
+        1 &          1 & E-glass/Epoxy &         55 &      0.125 \\
+\hline
+\end{tabular}  
+\end{table}  
+
+\section{Design 3: Design of a Hockey Stick Blade}
+\begin{table}[H]
+\centering
+\caption{Layup for Design 3}
+\label{tab:q3finallayup}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Ply & Qty             & Material           & Angle & Thickness \\
+& & & ($^{o}$) & (mm) \\
+\hline
+        17 &          1 & T300/N5208 &          0 &      0.125 \\
+
+        16 &          1 & T300/N5208 &         10 &      0.125 \\
+
+        15 &          1 & T300/N5208 &         17 &      0.125 \\
+
+        14 &          1 & T300/N5208 &        -17 &      0.125 \\
+
+        13 &          1 & T300/N5208 &         37 &      0.125 \\
+
+        12 &          1 & T300/N5208 &        -37 &      0.125 \\
+
+        11 &          1 & T300/N5208 &         35 &      0.125 \\
+
+        10 &          1 & T300/N5208 &         13 &      0.125 \\
+
+         9 &          1 &       CORE &        N/A &        1.5 \\
+
+         8 &          1 & T300/N5208 &         13 &      0.125 \\
+
+         7 &          1 & T300/N5208 &         35 &      0.125 \\
+
+         6 &          1 & T300/N5208 &        -37 &      0.125 \\
+
+         5 &          1 & T300/N5208 &         37 &      0.125 \\
+
+         4 &          1 & T300/N5208 &        -17 &      0.125 \\
+
+         3 &          1 & T300/N5208 &         17 &      0.125 \\
+
+         2 &          1 & T300/N5208 &         10 &      0.125 \\
+
+         1 &          1 & T300/N5208 &          0 &      0.125 \\
+\hline
+\end{tabular}  
+\end{table}
+The highest compressive loads (both moments and in-plane) are in the 1-axis. To optimize strength, the fiber directions should remain as close to $0^o$~as possible to combat this; however, there are also loads in the 2 and 3 axes, so a unidirectional laminate is not the solution.
+
+After trial and error, the symmetric layup that meets the requirements is given by Table~\ref{tab:q3finallayup}, also written [0/10/$\pm$17/$\pm$37/35/13/C$_{1/2}$]$_{s}$~, where the corresponding minimum safety factors for each of the failure criterion are listed in Table~\ref{tab:q3finalR}.
+
+From Engineering Toolbox, the approximate density of Balsa Wood is $\rho = 160~\text{kg/m}^{3}$. Thus, the core represents an added weight of 0.72~g to the laminate, as shown below. 
+\begin{align*}
+m_{core} &= \rho \cdot W \cdot B \cdot h_{o} \\
+&= 160 \cdot 0.03 \cdot 0.1 \cdot 0.0015 \\
+&= 7.2 \cdot 10^{-4}~\text{kg} \\
+&= 0.72~\text{g}
+\end{align*} 
+This layup thus has a total of 17 plies with a mass of 10.32~g, (both of which include the core). The mass without the core is 9.60~g.
+
+Refer to Tables~\ref{tab:q3stress1},~\ref{tab:q3r1},~\ref{tab:q3stress2}~and~\ref{tab:q3r2}~in Appendix~\ref{sec:q3} for the program output as well as the stresses, strains and safety factor $R$ values per top and bottom of each ply.
+\begin{table}[H]
+\centering
+\caption{Minimum Safety Factors for Load Cases 1 and 2} \label{tab:q3finalR}
+\begin{tabular}{|c|ccc|}
+\hline
+           & \multicolumn{ 3}{|c|}{Failure Criterion} \\
+\hline
+ Load Case & Maximum Stress &  Quadratic &     Hashin \\
+\hline
+         1 &      2.204 &      2.162 &      2.204 \\
+
+         2 &      2.260 &      2.188 &      2.260 \\
+\hline
+\end{tabular} 
+\end{table} 
+ 	
+\newpage
+\appendix
+\input{./MECH530_q1}
+\input{./MECH530_q2}
+\input{./MECH530_q3}
+
+\end{document}
